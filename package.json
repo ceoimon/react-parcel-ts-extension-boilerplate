@@ -1,0 +1,48 @@
+{
+  "name": "extension-name",
+  "scripts": {
+    "start": "yarn clean && yarn copy-static && yarn watch:all",
+    "build": "yarn clean && yarn build:all && yarn copy-static",
+    "build:all": "yarn build:background & yarn build:contentscript & yarn build:popup",
+    "build:contentscript": "parcel build src/contentscript.ts -o contentscript.js",
+    "build:background": "parcel build src/background.ts -o background.js",
+    "build:popup": "parcel build src/popup.tsx -o popup.js --public-url='/'",
+    "watch:all": "yarn watch:background & yarn watch:contentscript & yarn watch:popup & npm-watch & yarn css-types -w",
+    "watch:contentscript": "parcel watch src/contentscript.ts -o contentscript.js",
+    "watch:background": "parcel watch src/background.ts -o background.js",
+    "watch:popup": "parcel watch src/popup.tsx -o popup.js --public-url='/'",
+    "copy-static": "cp -r static/ dist/",
+    "clean": "rm -rf dist",
+    "css-types": "tcm src",
+    "postinstall": "yarn css-types"
+  },
+  "watch": {
+    "copy-static": {
+      "patterns": [
+        "static"
+      ],
+      "extensions": "*",
+      "quiet": false
+    }
+  },
+  "devDependencies": {
+    "@ceoimon/typed-css-modules": "^0.0.1",
+    "@types/chrome": "^0.0.63",
+    "@types/react": "^16.0.41",
+    "@types/react-dom": "^16.0.4",
+    "husky": "^0.15.0-rc.13",
+    "lint-staged": "^7.0.0",
+    "npm-watch": "^0.3.0",
+    "parcel-bundler": "^1.6.2",
+    "postcss-modules": "^1.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "web-ext-types": "^2.0.1"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "version": "0.0.0",
+  "private": true
+}
